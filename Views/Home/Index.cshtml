@@ -7,7 +7,7 @@
         <ul>
             <li><strong>Get Player By ID:</strong> <a target="_blank" href="/Home/Player?id=8f22eb36-5282-407a-b6f9-f9b62e5f7318">8f22eb36-5282-407a-b6f9-f9b62e5f7318</a></li>
             <li><strong>Get Players By ID:</strong> <a target="_blank" href="/Home/Players?ids=8f22eb36-5282-407a-b6f9-f9b62e5f7318,2fda010a-8c62-4c07-b601-4ba03f57e6af">8f22eb36-5282-407a-b6f9-f9b62e5f7318,2fda010a-8c62-4c07-b601-4ba03f57e6af</a></li>
-            <li><strong>Get Players By ID:</strong> <a target="_blank" href="/Home/Players?id=8f22eb36-5282-407a-b6f9-f9b62e5f7318,2fda010a-8c62-4c07-b601-4ba03f57e6af">8f22eb36-5282-407a-b6f9-f9b62e5f7318,8f22eb36-5282-407a-b6f9-f9b62e5f7318</a></li>
+            <li><strong>Get Players By ID:</strong> <a target="_blank" href="/Home/Players?ids=8f22eb36-5282-407a-b6f9-f9b62e5f7318,34cc7f47-9f14-4661-b9af-c9d3b2fc873a">8f22eb36-5282-407a-b6f9-f9b62e5f7318,34cc7f47-9f14-4661-b9af-c9d3b2fc873a</a></li>
             <li><strong>Get Players By ID:</strong> <a target="_blank" href="/Home/Players?ids=8f22eb36-5282-407a-b6f9-f9b62e5f7318,8f22eb36-5282-407a-b6f9-f9b62e5f7318">8f22eb36-5282-407a-b6f9-f9b62e5f7318,8f22eb36-5282-407a-b6f9-f9b62e5f7318</a></li>
             @{
                 var data = string.Empty;
@@ -16,7 +16,7 @@
                     data = $"{data}{(i!=0?",":"")}{i}";
                 }
             }
-            <li><strong>Inefficient Get Players:</strong> <a target="_blank" href="/Home/Players?ids=@data">Long List of Players</a></li>
+            <li><strong>Get All Players:</strong> <a target="_blank" href="/Home/AllPlayers">Long List of Players</a></li>
             <li><strong>Get Latest Players:</strong> <a target="_blank" href="/Home/LatestPlayers?ids=8f22eb36-5282-407a-b6f9-f9b62e5f7318">Latest Players</a></li>
         </ul>
     </div>

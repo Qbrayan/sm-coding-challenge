@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using sm_coding_challenge.Models;
 using sm_coding_challenge.Services.DataProvider;
 
@@ -18,33 +19,48 @@ namespace sm_coding_challenge.Controllers
             _dataProvider = dataProvider ?? throw new ArgumentNullException(nameof(dataProvider));
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            await _dataProvider.UpsertPlayers();
             return View();
         }
 
         [HttpGet]
-        public IActionResult Player(string id)
+        public async Task<IActionResult> Player(string id)
         {
-            return Json(_dataProvider.GetPlayerById(id));
+            var player = await _dataProvider.GetPlayerById(id);
+            return Json(player);
         }
 
         [HttpGet]
-        public IActionResult Players(string ids)
+        public async Task<IActionResult> Players(string ids)
         {
-            var idList = ids.Split(',');
-            var returnList = new List<PlayerModel>();
+            var idList = ids.Split(',').Distinct();
+
+            var returnList = new List<dynamic>();
             foreach (var id in idList)
             {
-                returnList.Add(_dataProvider.GetPlayerById(id));
+                var player = await _dataProvider.GetPlayerById(id);
+                returnList.Add(player);
             }
             return Json(returnList);
         }
 
         [HttpGet]
-        public IActionResult LatestPlayers(string ids)
+        public async Task<IActionResult> AllPlayers()
         {
-            throw new NotImplementedException("Method Needs to be Implemented");
+
+            var players = await _dataProvider.AllPlayers();
+
+            return Json(players);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> LatestPlayers(string ids)
+        {
+            var players = await _dataProvider.LatestPlayers(ids);
+
+            return Json(players);
         }
 
         public IActionResult Error()

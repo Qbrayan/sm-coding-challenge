@@ -1,8 +1,11 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using sm_coding_challenge.Persistence.Context;
+using sm_coding_challenge.Persistence.Repositories;
 using sm_coding_challenge.Services.DataProvider;
 
 namespace sm_coding_challenge
@@ -21,7 +24,13 @@ namespace sm_coding_challenge
         {
             services.AddControllersWithViews();
 
+            services.AddDbContext<AppDbContext>(options => {
+                options.UseInMemoryDatabase("Sports");
+            });
+
+
             services.AddTransient<IDataProvider, DataProviderImpl>();
+            services.AddTransient<IDataRepository, DataRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
@@ -6,6 +7,9 @@ namespace sm_coding_challenge.Models
     [DataContract]
     public class DataResponseModel
     {
+        [DataMember(Name = "timestamp")]
+        public DateTime TimeStamp { get; set; }
+
         [DataMember(Name = "week")]
         public string Week { get; set; }
 
@@ -19,16 +23,16 @@ namespace sm_coding_challenge.Models
         public string SeasonId { get; set; }
 
         [DataMember(Name = "rushing")]
-        public List<PlayerModel> Rushing { get; set; }
+        public List<RushingModel> Rushing { get; set; }
 
         [DataMember(Name = "passing")]
-        public List<PlayerModel> Passing { get; set; }
+        public List<PassingModel> Passing { get; set; }
 
         [DataMember(Name = "receiving")]
-        public List<PlayerModel> Receiving { get; set; }
+        public List<ReceivingModel> Receiving { get; set; }
 
         [DataMember(Name = "kicking")]
-        public List<PlayerModel> Kicking { get; set; }
+        public List<KickingModel> Kicking { get; set; }
 
         public DataResponseModel()
         {

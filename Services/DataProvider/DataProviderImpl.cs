@@ -1,64 +1,38 @@
 using System;
 using System.Net;
 using System.Net.Http;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using sm_coding_challenge.Models;
+using sm_coding_challenge.Persistence.Repositories;
 
 namespace sm_coding_challenge.Services.DataProvider
 {
     public class DataProviderImpl : IDataProvider
     {
-        public static TimeSpan Timeout = TimeSpan.FromSeconds(30);
 
-        public PlayerModel GetPlayerById(string id)
+        protected readonly IDataRepository _dataRepository;
+        public DataProviderImpl(IDataRepository dataRepository)
         {
-            var handler = new HttpClientHandler()
-            {
-                AutomaticDecompression = DecompressionMethods.GZip | DecompressionMethods.Deflate
-            };
-            using (var client = new HttpClient(handler))
-            {
-                client.Timeout = Timeout;
-                var response = client.GetAsync("https://gist.githubusercontent.com/RichardD012/a81e0d1730555bc0d8856d1be980c803/raw/3fe73fafadf7e5b699f056e55396282ff45a124b/basic.json").Result;
-                var stringData = response.Content.ReadAsStringAsync().Result;
-                var dataResponse = JsonConvert.DeserializeObject<DataResponseModel>(stringData, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
-                foreach(var player in dataResponse.Rushing)
-                {
-                    if(player.Id.Equals(id))
-                    {
-                        return player;
-                    }
-                }
-                foreach(var player in dataResponse.Passing)
-                {
-                    if(player.Id.Equals(id))
-                    {
-                        return player;
-                    }
-                }
-                foreach(var player in dataResponse.Receiving)
-                {
-                    if(player.Id.Equals(id))
-                    {
-                        return player;
-                    }
-                }
-                foreach(var player in dataResponse.Receiving)
-                {
-                    if(player.Id.Equals(id))
-                    {
-                        return player;
-                    }
-                }
-                foreach(var player in dataResponse.Kicking)
-                {
-                    if(player.Id.Equals(id))
-                    {
-                        return player;
-                    }
-                }
-            }
-            return null;
+            _dataRepository = dataRepository;
+        }
+        public async Task<int> UpsertPlayers()
+        {
+            return await _dataRepository.UpsertPlayers();
+        }
+        public async Task<dynamic> GetPlayerById(string id)
+        {
+            return  await _dataRepository.GetPlayerById(id);
+        }
+
+        public async Task<PlayerModel> AllPlayers()
+        {
+            return await _dataRepository.AllPlayers();
+        }
+
+        public async Task<PlayerModel> LatestPlayers(string ids)
+        {
+            return await _dataRepository.LatestPlayers(ids);
         }
     }
 }
